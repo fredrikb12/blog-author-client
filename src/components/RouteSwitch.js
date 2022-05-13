@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
+import HomeRoute from "./Home";
 import Posts from "./Posts";
 
 function RouteSwitch() {
@@ -7,7 +8,7 @@ function RouteSwitch() {
     <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<h1>Test</h1>} />
+          <Route index element={<HomeRoute />} />
           <Route path="/posts" element={<Posts />} />
           <Route path="/posts/:postId" element={<h1>Post</h1>} />
           <Route path="*" element={<h1>There's nothing here. </h1>} />
