@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 function SignIn() {
   const [pw, setPw] = useState("");
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState([]);
+  const [user, setUser] = useOutletContext();
 
   const nav = useNavigate();
 
@@ -29,14 +30,17 @@ function SignIn() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         method: "POST",
         mode: "cors",
         body: body,
       });
       const res = await response.json();
       if (res.code === 200) {
+        await setUser(() => res.user);
         nav("/success");
       } else {
+        setUser(() => null);
         setErrors(() => res.errors);
       }
     } catch (e) {
