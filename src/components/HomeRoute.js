@@ -10,19 +10,6 @@ function HomeRoute() {
     if (user) nav("/posts");
     else nav("/sign-in");
   }, [user, nav]);
-
-  /*useEffect(() => {
-    async function fetchPosts() {
-      const response = await fetch("http://localhost:3000/auth/posts", {
-        credentials: "include",
-        method: "GET",
-        mode: "cors",
-      });
-      const data = response.json();
-      console.log(data);
-    }
-    fetchPosts();
-  }, [user, nav]);*/
 }
 
 export default HomeRoute;
