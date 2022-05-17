@@ -1,96 +1,35 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchPosts } from "../helpers/fetchPosts";
+import { postsManager } from "../helpers/postsManager";
 
 function Posts() {
-  //const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
 
-  const [posts, dispatch] = useReducer(postReducer, []);
-
-  function postReducer(state, action) {
-    switch (action.type) {
-      case "update": {
-        return state.reduce((posts, post) => {
-          const obj = { ...post };
-          if (post._id === action._id) {
-            obj[action.fieldName] = action.fieldValue;
+  function handleStateUpdate(type, data) {
+    if (type === "update") {
+      setPosts((prevPosts) => {
+        return prevPosts.reduce((posts, post) => {
+          const currentObj = { ...post };
+          if (post._id === data._id) {
+            currentObj[data.fieldName] = data.fieldValue;
           }
-          return [...posts, obj];
+          return [...posts, currentObj];
         }, []);
-      }
-      case "load": {
-        return [...action.payload];
-      }
-      default: {
-        break;
-      }
+      });
+    } else if (type === "load") {
+      setPosts(() => [data.posts]);
     }
   }
 
-  function editLocalPublishedState(post) {
-    /*setPosts((prevPosts) => {
-      return prevPosts.map((post) => {
-        if (post._id === id) return { ...post, published: !post.published };
-        else return { ...post };
-      });
-    });*/
-    dispatch({
-      type: "update",
-      fieldName: "published",
-      fieldValue: !post.published,
-      _id: post._id,
-    });
-  }
-
-  async function changePublishedState(post) {
-    const response = await fetch(
-      `http://localhost:3000/auth/posts/${post._id}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        method: "PUT",
-        body: JSON.stringify({
-          ...post,
-          published: !post.published,
-          author: post.author._id,
-        }),
-      }
-    );
-    const res = await response.json();
-    if (res.code === 200) {
-      editLocalPublishedState(post);
-    } else {
-      console.log("bad code");
-
-      dispatch({
-        type: "update",
-        fieldName: "error",
-        fieldValue: "Something went wrong updating this post",
-        _id: post._id,
-      });
-
-      /*setPosts((prevPosts) => {
-        return prevPosts.map((thisPost) => {
-          if (thisPost._id === post._id) {
-            return {
-              ...thisPost,
-              error: "Something went wrong updating this post.",
-            };
-          } else {
-            return thisPost;
-          }
-        });
-      });*/
-    }
+  async function handleClick(post) {
+    const response = await postsManager.updatePost(post, handleStateUpdate);
+    postsManager.handleResponse(response, post, handleStateUpdate);
   }
 
   useEffect(() => {
     async function initialLoad() {
-      const data = await fetchPosts();
-      dispatch({ type: "load", payload: data.posts });
-      //setPosts(() => data.posts);
+      const data = await postsManager.fetchPosts();
+      setPosts(() => data.posts);
     }
     initialLoad();
   }, []);
@@ -110,7 +49,7 @@ function Posts() {
                 <h2>{post.title}</h2>
               </Link>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <button onClick={() => changePublishedState(post)}>
+                <button onClick={() => handleClick(post)}>
                   {post.published ? "Unpublish" : "Publish"}
                 </button>
                 <p>{post.error ? post.error : ""}</p>
@@ -119,9 +58,14 @@ function Posts() {
             <p>{post.text}</p>
             <div style={{ display: "flex", gap: "12px" }}>
               <p>
-                {post.author.first_name} {post.author.last_name}
+                {post.author ? post.author.first_name : null}{" "}
+                {post.author ? post.author.last_name : null}
               </p>
-              <p>{new Date(post.updatedAt).toLocaleDateString()}</p>
+              <p>
+                {post.updatedAt
+                  ? new Date(post.updatedAt).toLocaleDateString()
+                  : null}
+              </p>
             </div>
           </article>
         );
