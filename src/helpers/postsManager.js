@@ -91,12 +91,14 @@ const postsManager = (() => {
         mode: "cors",
       });
 
-      if (!response.ok) return Promise.reject(response.status);
+      if (!response.ok) {
+        if (response.status === 403) return { posts: [], status: 403 };
+      }
 
       const data = await response.json();
       return data;
     } catch (e) {
-      throw new Error(e);
+      console.log(e);
     }
   };
 

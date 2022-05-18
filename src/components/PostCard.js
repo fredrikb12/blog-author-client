@@ -11,7 +11,12 @@ function PostCard({ post, handleClick }) {
           <button onClick={() => handleClick("update", post)}>
             {post.published ? "Unpublish" : "Publish"}
           </button>
-          <button onClick={() => handleClick("delete", post)}>Delete</button>
+          <button
+            className="delete-button"
+            onClick={() => handleClick("delete", post)}
+          >
+            Delete
+          </button>
           <p>{post.error ? post.error : ""}</p>
         </div>
       </div>
