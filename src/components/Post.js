@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Post({ post, handlePublishUpdate }) {
+function PostCard({ post, handleClick }) {
   return (
     <article>
       <div style={{ display: "flex", justifyContent: "space-around" }}>
@@ -8,9 +8,10 @@ function Post({ post, handlePublishUpdate }) {
           <h2>{post.title}</h2>
         </Link>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <button onClick={() => handlePublishUpdate(post)}>
+          <button onClick={() => handleClick("update", post)}>
             {post.published ? "Unpublish" : "Publish"}
           </button>
+          <button onClick={() => handleClick("delete", post)}>Delete</button>
           <p>{post.error ? post.error : ""}</p>
         </div>
       </div>
@@ -30,4 +31,4 @@ function Post({ post, handlePublishUpdate }) {
   );
 }
 
-export default Post;
+export default PostCard;

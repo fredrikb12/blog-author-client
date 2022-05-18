@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { postsManager } from "../helpers/postsManager";
-import Post from "./Post";
+import PostCard from "./Post";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
@@ -16,9 +16,22 @@ function Posts() {
     }
   }
 
-  async function handleClick(post) {
-    const response = await postsManager.putPost(post, handleStateUpdate);
-    postsManager.handleResponse(response, post, handleStateUpdate);
+  async function handleClick(type, post) {
+    console.log(type, post);
+    switch (type) {
+      case "update": {
+        const response = await postsManager.putPost(post, handleStateUpdate);
+        postsManager.handleResponse(response, post, handleStateUpdate);
+        break;
+      }
+      case "delete": {
+        // const response = await postsManager.deletePost(post, handleStateUpdate);
+        //postsManager.handleResponse(response, post, handleStateUpdate);
+        break;
+      }
+      default:
+        return;
+    }
   }
 
   useEffect(() => {
@@ -38,7 +51,7 @@ function Posts() {
       <h1>Posts:</h1>
       {posts.map((post) => {
         return (
-          <Post key={post._id} post={post} handlePublishUpdate={handleClick} />
+          <PostCard key={post._id} post={post} handleClick={handleClick} />
         );
       })}
     </main>
