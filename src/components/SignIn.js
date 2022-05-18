@@ -35,6 +35,9 @@ function SignIn() {
         mode: "cors",
         body: body,
       });
+      
+      if (!response.ok) return Promise.reject(response.status);
+
       const res = await response.json();
       if (res.code === 200) {
         await setUser(() => res.user);
