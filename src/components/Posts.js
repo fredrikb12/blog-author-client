@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { postsManager } from "../helpers/postsManager";
-import PostCard from "./Post";
+import PostCard from "./PostCard";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
