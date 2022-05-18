@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { postsManager } from "../helpers/postsManager";
+import Post from "./Post";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
@@ -37,31 +38,7 @@ function Posts() {
       <h1>Posts:</h1>
       {posts.map((post) => {
         return (
-          <article key={post._id}>
-            <div style={{ display: "flex", justifyContent: "space-around" }}>
-              <Link to={`/posts/${post._id}`}>
-                <h2>{post.title}</h2>
-              </Link>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <button onClick={() => handleClick(post)}>
-                  {post.published ? "Unpublish" : "Publish"}
-                </button>
-                <p>{post.error ? post.error : ""}</p>
-              </div>
-            </div>
-            <p>{post.text}</p>
-            <div style={{ display: "flex", gap: "12px" }}>
-              <p>
-                {post.author ? post.author.first_name : null}{" "}
-                {post.author ? post.author.last_name : null}
-              </p>
-              <p>
-                {post.updatedAt
-                  ? new Date(post.updatedAt).toLocaleDateString()
-                  : null}
-              </p>
-            </div>
-          </article>
+          <Post key={post._id} post={post} handlePublishUpdate={handleClick} />
         );
       })}
     </main>

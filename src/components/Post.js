@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Post({ post, handlePublishUpdate }) {
   return (
-    <article key={post._id}>
+    <article>
       <div style={{ display: "flex", justifyContent: "space-around" }}>
         <Link to={`/posts/${post._id}`}>
           <h2>{post.title}</h2>
