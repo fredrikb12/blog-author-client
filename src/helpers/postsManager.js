@@ -1,5 +1,6 @@
 const postsManager = (() => {
   const serverURL = "http://localhost:3000/";
+
   const putPost = async (post, callback) => {
     const response = await fetch(`${serverURL}auth/posts/${post._id}`, {
       headers: {
@@ -18,8 +19,27 @@ const postsManager = (() => {
     return res;
   };
 
+  const deletePost = async (post, callback) => {
+    const response = await fetch(`${serverURL}auth/posts/${post._id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      method: "DELETE",
+      body: JSON.stringify({
+        postId: post._id,
+      }),
+    });
+    const res = await response.json();
+    return res;
+  };
+
   const handleResponse = (response, post, callback) => {
-    if (response.code === 200) {
+    if (response.message === "Post deleted") {
+      callback("delete", {
+        _id: post._id,
+      });
+    } else if (response.message === "Post updated") {
       callback("update", {
         _id: post._id,
         fieldName: "published",
@@ -44,6 +64,12 @@ const postsManager = (() => {
     }, []);
   };
 
+  const deleteLocalPost = (prevPosts, data) => {
+    return prevPosts.filter((post) => {
+      return post._id !== data._id;
+    });
+  };
+
   const fetchPosts = async () => {
     const response = await fetch(`${serverURL}auth/posts/`, {
       credentials: "include",
@@ -55,6 +81,8 @@ const postsManager = (() => {
   };
 
   return {
+    deletePost,
+    deleteLocalPost,
     putPost,
     updateLocalPost,
     handleResponse,

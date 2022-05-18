@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { postsManager } from "../helpers/postsManager";
 import PostCard from "./Post";
 
@@ -13,11 +12,14 @@ function Posts() {
       });
     } else if (type === "load") {
       setPosts(() => [...data.posts]);
+    } else if (type === "delete") {
+      setPosts((prevPosts) => {
+        return postsManager.deleteLocalPost(prevPosts, data);
+      });
     }
   }
 
   async function handleClick(type, post) {
-    console.log(type, post);
     switch (type) {
       case "update": {
         const response = await postsManager.putPost(post, handleStateUpdate);
@@ -25,8 +27,8 @@ function Posts() {
         break;
       }
       case "delete": {
-        // const response = await postsManager.deletePost(post, handleStateUpdate);
-        //postsManager.handleResponse(response, post, handleStateUpdate);
+        const response = await postsManager.deletePost(post, handleStateUpdate);
+        postsManager.handleResponse(response, post, handleStateUpdate);
         break;
       }
       default:
@@ -41,10 +43,6 @@ function Posts() {
     }
     initialLoad();
   }, []);
-
-  useEffect(() => {
-    console.log(posts);
-  }, [posts]);
 
   return (
     <main>
