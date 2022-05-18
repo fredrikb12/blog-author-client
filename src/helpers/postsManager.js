@@ -16,6 +16,8 @@ const postsManager = (() => {
         }),
       });
 
+      if (!response.ok) return Promise.reject(response.status);
+
       const res = await response.json();
       return res;
     } catch (e) {
@@ -35,6 +37,9 @@ const postsManager = (() => {
           postId: post._id,
         }),
       });
+
+      if (!response.ok) return Promise.reject(response.status);
+
       const res = await response.json();
       return res;
     } catch (e) {
@@ -85,6 +90,9 @@ const postsManager = (() => {
         method: "GET",
         mode: "cors",
       });
+
+      if (!response.ok) return Promise.reject(response.status);
+
       const data = await response.json();
       return data;
     } catch (e) {
