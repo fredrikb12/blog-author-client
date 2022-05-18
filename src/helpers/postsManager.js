@@ -1,20 +1,18 @@
 const postsManager = (() => {
+  const serverURL = "http://localhost:3000/";
   const putPost = async (post, callback) => {
-    const response = await fetch(
-      `http://localhost:3000/auth/posts/${post._id}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        method: "PUT",
-        body: JSON.stringify({
-          ...post,
-          published: !post.published,
-          author: post.author._id,
-        }),
-      }
-    );
+    const response = await fetch(`${serverURL}auth/posts/${post._id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      method: "PUT",
+      body: JSON.stringify({
+        ...post,
+        published: !post.published,
+        author: post.author._id,
+      }),
+    });
 
     const res = await response.json();
     return res;
@@ -47,7 +45,7 @@ const postsManager = (() => {
   };
 
   const fetchPosts = async () => {
-    const response = await fetch("http://localhost:3000/auth/posts", {
+    const response = await fetch(`${serverURL}auth/posts/`, {
       credentials: "include",
       method: "GET",
       mode: "cors",
