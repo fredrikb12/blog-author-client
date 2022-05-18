@@ -2,36 +2,44 @@ const postsManager = (() => {
   const serverURL = "http://localhost:3000/";
 
   const putPost = async (post, callback) => {
-    const response = await fetch(`${serverURL}auth/posts/${post._id}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      method: "PUT",
-      body: JSON.stringify({
-        ...post,
-        published: !post.published,
-        author: post.author._id,
-      }),
-    });
+    try {
+      const response = await fetch(`${serverURL}auth/posts/${post._id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        method: "PUT",
+        body: JSON.stringify({
+          ...post,
+          published: !post.published,
+          author: post.author._id,
+        }),
+      });
 
-    const res = await response.json();
-    return res;
+      const res = await response.json();
+      return res;
+    } catch (e) {
+      throw new Error(e);
+    }
   };
 
   const deletePost = async (post, callback) => {
-    const response = await fetch(`${serverURL}auth/posts/${post._id}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      method: "DELETE",
-      body: JSON.stringify({
-        postId: post._id,
-      }),
-    });
-    const res = await response.json();
-    return res;
+    try {
+      const response = await fetch(`${serverURL}auth/posts/${post._id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        method: "DELETE",
+        body: JSON.stringify({
+          postId: post._id,
+        }),
+      });
+      const res = await response.json();
+      return res;
+    } catch (e) {
+      throw new Error(e);
+    }
   };
 
   const handleResponse = (response, post, callback) => {
@@ -71,13 +79,17 @@ const postsManager = (() => {
   };
 
   const fetchPosts = async () => {
-    const response = await fetch(`${serverURL}auth/posts/`, {
-      credentials: "include",
-      method: "GET",
-      mode: "cors",
-    });
-    const data = await response.json();
-    return data;
+    try {
+      const response = await fetch(`${serverURL}auth/posts/`, {
+        credentials: "include",
+        method: "GET",
+        mode: "cors",
+      });
+      const data = await response.json();
+      return data;
+    } catch (e) {
+      throw new Error(e);
+    }
   };
 
   return {
