@@ -1,5 +1,5 @@
 const postsManager = (() => {
-  const updatePost = async (post, callback) => {
+  const putPost = async (post, callback) => {
     const response = await fetch(
       `http://localhost:3000/auth/posts/${post._id}`,
       {
@@ -36,6 +36,16 @@ const postsManager = (() => {
     }
   };
 
+  const updateLocalPost = (prevPosts, data) => {
+    return prevPosts.reduce((posts, post) => {
+      const currentPost = { ...post };
+      if (currentPost._id === data._id) {
+        currentPost[data.fieldName] = data.fieldValue;
+      }
+      return [...posts, currentPost];
+    }, []);
+  };
+
   const fetchPosts = async () => {
     const response = await fetch("http://localhost:3000/auth/posts", {
       credentials: "include",
@@ -47,7 +57,8 @@ const postsManager = (() => {
   };
 
   return {
-    updatePost,
+    putPost,
+    updateLocalPost,
     handleResponse,
     fetchPosts,
   };

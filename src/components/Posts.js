@@ -8,28 +8,22 @@ function Posts() {
   function handleStateUpdate(type, data) {
     if (type === "update") {
       setPosts((prevPosts) => {
-        return prevPosts.reduce((posts, post) => {
-          const currentObj = { ...post };
-          if (post._id === data._id) {
-            currentObj[data.fieldName] = data.fieldValue;
-          }
-          return [...posts, currentObj];
-        }, []);
+        return postsManager.updateLocalPost(prevPosts, data);
       });
     } else if (type === "load") {
-      setPosts(() => [data.posts]);
+      setPosts(() => [...data.posts]);
     }
   }
 
   async function handleClick(post) {
-    const response = await postsManager.updatePost(post, handleStateUpdate);
+    const response = await postsManager.putPost(post, handleStateUpdate);
     postsManager.handleResponse(response, post, handleStateUpdate);
   }
 
   useEffect(() => {
     async function initialLoad() {
       const data = await postsManager.fetchPosts();
-      setPosts(() => data.posts);
+      handleStateUpdate("load", data);
     }
     initialLoad();
   }, []);
