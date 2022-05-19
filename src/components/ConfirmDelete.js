@@ -14,15 +14,19 @@ const ConfirmDelete = React.forwardRef((props, ref) => {
     >
       <dialog
         style={{
-          position: "relative",
           minWidth: "clamp(250px, 35vw, 500px)",
           minHeight: "clamp(200px, 35vh, 350px)",
           top: "20%",
+          margin: "auto",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
         ref={ref}
         open={show}
       >
-        Are you sure you want to delete this post?
+        <p>Are you sure you want to delete this post?</p>
         <div style={{ display: "flex", gap: "20px" }}>
           <button onClick={() => handleClick("deleteConfirm")}>Confirm</button>
           <button onClick={() => handleClick("deleteCancel")}>Cancel</button>

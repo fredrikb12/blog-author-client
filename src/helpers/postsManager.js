@@ -92,10 +92,22 @@ const postsManager = (() => {
       });
 
       if (!response.ok) {
-        if (response.status === 403) return { posts: [], status: 403 };
+        if (response.status === 403)
+          return {
+            posts: [],
+            status: 403,
+            message: "You were not authorized to view posts, please log in.",
+          };
+        else
+          return {
+            posts: [],
+            status: response.status,
+            message: "Something went wrong.",
+          };
       }
 
       const data = await response.json();
+      console.log(data);
       return data;
     } catch (e) {
       console.log(e);

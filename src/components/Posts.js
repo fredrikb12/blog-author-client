@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { postsManager } from "../helpers/postsManager";
 import ConfirmDelete from "./ConfirmDelete";
 import PostCard from "./PostCard";
@@ -6,6 +7,7 @@ import PostCard from "./PostCard";
 function Posts() {
   const [posts, setPosts] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [error, setError] = useState(null);
 
   const dialog = useRef();
 
@@ -64,7 +66,17 @@ function Posts() {
   useEffect(() => {
     async function initialLoad() {
       const data = await postsManager.fetchPosts();
-      handleStateUpdate("load", data);
+      if (data.status !== 200) {
+        setError(() => {
+          return {
+            message: data.message,
+            status: data.status,
+          };
+        });
+      } else {
+        handleStateUpdate("load", data);
+        setError(() => null);
+      }
     }
     initialLoad();
   }, []);
@@ -73,7 +85,9 @@ function Posts() {
     <>
       <main>
         <h1>Posts:</h1>
-
+        <p>{error && error.message}</p>
+        <p>{error && "Status: " + error.status}</p>
+        {error && error.status === 403 && <Link to="/sign-in">Sign In</Link>}
         {posts.map((post) => {
           return (
             <PostCard key={post._id} post={post} handleClick={handleClick} />
