@@ -8,6 +8,7 @@ function Posts() {
   const [posts, setPosts] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState(null);
+  const [postToConfirm, setPostToConfirm] = useState({});
 
   const dialog = useRef();
 
@@ -46,6 +47,7 @@ function Posts() {
         break;
       }
       case "delete": {
+        setPostToConfirm(() => post);
         setShowConfirm(() => true);
         break;
       }
@@ -99,6 +101,7 @@ function Posts() {
           ref={dialog}
           handleClick={handleClick}
           show={showConfirm}
+          post={postToConfirm}
         />
       )}
     </>
