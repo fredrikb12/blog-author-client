@@ -92,18 +92,7 @@ const postsManager = (() => {
       });
 
       if (!response.ok) {
-        if (response.status === 403)
-          return {
-            posts: [],
-            status: 403,
-            message: "You were not authorized to view posts, please log in.",
-          };
-        else
-          return {
-            posts: [],
-            status: response.status,
-            message: "Something went wrong.",
-          };
+        return checkResponse(response);
       }
 
       const data = await response.json();
@@ -114,6 +103,41 @@ const postsManager = (() => {
     }
   };
 
+  const fetchPost = async (postId) => {
+    try {
+      const response = await fetch(`${serverURL}auth/posts/${postId}`, {
+        credentials: "include",
+        method: "GET",
+        mode: "cors",
+      });
+
+      if (!response.ok) {
+        return checkResponse(response);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const checkResponse = (response) => {
+    if (response.status === 403)
+      return {
+        posts: [],
+        status: 403,
+        message: "You were not authorized to view posts, please log in.",
+      };
+    else
+      return {
+        posts: [],
+        status: response.status,
+        message: "Something went wrong.",
+      };
+  };
+
   return {
     deletePost,
     deleteLocalPost,
@@ -121,6 +145,7 @@ const postsManager = (() => {
     updateLocalPost,
     handleResponse,
     fetchPosts,
+    fetchPost,
   };
 })();
 
