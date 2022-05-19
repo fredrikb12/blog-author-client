@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
 function SignIn() {
   const [pw, setPw] = useState("");
@@ -35,7 +35,7 @@ function SignIn() {
         mode: "cors",
         body: body,
       });
-      
+
       if (!response.ok) return Promise.reject(response.status);
 
       const res = await response.json();
@@ -52,39 +52,49 @@ function SignIn() {
   }
 
   return (
-    <form method="POST" onSubmit={LogIn}>
-      <div>
-        <label htmlFor="username">
-          Email:
-          <input
-            id="username"
-            type="email"
-            name="username"
-            value={email}
-            placeholder="email@gmail.com"
-            onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="password">
-          Password:
-          <input
-            id="password"
-            type="password"
-            name="password"
-            value={pw}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="submit">Submit</button>
+    <div style={{ padding: "50px" }}>
+      <form method="POST" onSubmit={LogIn}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <label htmlFor="username">
+            Email:
+            <input
+              id="username"
+              type="email"
+              name="username"
+              value={email}
+              placeholder="email@gmail.com"
+              onChange={handleChange}
+            />
+          </label>
+          <label htmlFor="password">
+            Password:
+            <input
+              id="password"
+              type="password"
+              name="password"
+              value={pw}
+              onChange={handleChange}
+            />
+          </label>
+          <button style={{ maxWidth: "100px" }} type="submit">
+            Submit
+          </button>
+        </div>
+        {errors.map((error, index) => {
+          return (
+            <p style={{ color: "red" }} key={index}>
+              {error}
+            </p>
+          );
+        })}
+      </form>
+      <div style={{ marginTop: "100px" }}>
+        <p>Already signed in?</p>
+        <p>
+          Click <Link to="/posts">here to go to posts</Link>
+        </p>
       </div>
-      {errors.map((error, index) => {
-        return (
-          <p style={{ color: "red" }} key={index}>
-            {error}
-          </p>
-        );
-      })}
-    </form>
+    </div>
   );
 }
 
