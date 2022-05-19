@@ -27,8 +27,8 @@ function PostCard({ post, handleClick }) {
           {post.author ? post.author.last_name : null}
         </p>
         <p>
-          {post.updatedAt
-            ? new Date(post.updatedAt).toLocaleDateString()
+          {post.createdAt
+            ? new Date(post.createdAt).toLocaleDateString()
             : null}
         </p>
       </div>
