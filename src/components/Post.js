@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { postsManager } from "../helpers/postsManager";
+import Comment from "./Comment";
 
 function Post() {
   const { postId } = useParams();
@@ -22,12 +23,7 @@ function Post() {
       </div>
       {post.comments &&
         post.comments.map((comment) => {
-          return (
-            <>
-              <p>{comment.author}</p>
-              <p>{comment.text}</p>
-            </>
-          );
+          return <Comment key={comment._id} comment={comment} />;
         })}
     </div>
   );

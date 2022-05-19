@@ -138,6 +138,14 @@ const postsManager = (() => {
       };
   };
 
+  const putComment = (comment, id) => {
+    console.log(comment, id);
+  };
+
+  const deleteComment = (id) => {
+    console.log(id);
+  };
+
   return {
     deletePost,
     deleteLocalPost,
@@ -146,6 +154,8 @@ const postsManager = (() => {
     handleResponse,
     fetchPosts,
     fetchPost,
+    putComment,
+    deleteComment,
   };
 })();
 
