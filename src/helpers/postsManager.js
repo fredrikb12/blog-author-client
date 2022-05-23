@@ -138,8 +138,35 @@ const postsManager = (() => {
       };
   };
 
-  const putComment = (comment, id) => {
-    console.log(comment, id);
+  const putComment = async (comment, id, callback) => {
+    console.log("putting comment");
+    try {
+      const response = await fetch(`${serverURL}auth/comments/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        method: "PUT",
+        body: JSON.stringify({
+          text: comment.text,
+          author: comment.author,
+          commentId: id,
+        }),
+      });
+
+      if (!response.ok) return Promise.reject(response.status);
+
+      const res = await response.json();
+      console.log(res);
+      if (res.message === "Comment updated") {
+        console.log("checking");
+        callback("author", res.comment.author);
+        callback("text", res.comment.text);
+      }
+      return res;
+    } catch (e) {
+      throw new Error(e);
+    }
   };
 
   const deleteComment = (id) => {

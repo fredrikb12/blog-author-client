@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { postsManager } from "../helpers/postsManager";
 
-function Comment({ comment }) {
+function Comment({ comment, handleClick }) {
   const [editing, setEditing] = useState(false);
   const [author, setAuthor] = useState("");
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    console.log(author);
+    console.log(text);
+  }, [author, text]);
 
   function handleChange(e) {
     if (e.target.name === "author") {
@@ -17,10 +22,18 @@ function Comment({ comment }) {
     }
   }
 
+  function handleStateUpdate(field, data) {
+    if (field === "author") {
+      setAuthor(() => data);
+    } else if (field === "text") {
+      setText(() => data);
+    }
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     setEditing(() => false);
-    postsManager.putComment({ author, text }, comment._id);
+    postsManager.putComment({ author, text }, comment._id, handleStateUpdate);
   }
 
   function handleCancel(e) {
@@ -69,12 +82,15 @@ function Comment({ comment }) {
         style={{ display: "flex", flexDirection: "column", padding: "20px" }}
       >
         <div>
-          <p>{comment.author}</p>
-          <p>{comment.text}</p>
+          <p>{author || comment.author}</p>
+          <p>{text || comment.text}</p>
         </div>
         <div>
           <button onClick={() => setEditing(() => true)}>Edit</button>
-          <button onClick={() => postsManager.deleteComment(comment._id)}>
+          <button
+            className="delete-button"
+            onClick={() => handleClick("delete", comment)}
+          >
             Delete
           </button>
         </div>
