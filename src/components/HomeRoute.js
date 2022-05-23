@@ -3,7 +3,6 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 
 function HomeRoute() {
   const [user, setUser] = useOutletContext();
-  const [posts, setPosts] = useState([]);
   const nav = useNavigate();
 
   useEffect(() => {
