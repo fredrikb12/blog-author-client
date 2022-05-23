@@ -21,7 +21,8 @@ function Post() {
       }
 
       case "deleteConfirm": {
-        postsManager.deleteComment(item._id);
+        await postsManager.deleteComment(item._id);
+        postsManager.deleteLocalComment(item._id, setPost);
         break;
       }
 

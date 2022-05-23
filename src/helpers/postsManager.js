@@ -169,8 +169,44 @@ const postsManager = (() => {
     }
   };
 
-  const deleteComment = (id) => {
-    console.log(id);
+  const deleteComment = async (id, callback) => {
+    console.log("deleting comment");
+    try {
+      const response = await fetch(`${serverURL}auth/comments/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        method: "DELETE",
+        body: JSON.stringify({
+          commentId: id,
+        }),
+      });
+
+      if (!response.ok) return Promise.reject(response.status);
+
+      const res = await response.json();
+      console.log(res);
+      if (res.message === "Comment updated") {
+        console.log("checking");
+        //callback("author", res.comment.author);
+        //callback("text", res.comment.text);
+      }
+      return res;
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+
+  const deleteLocalComment = (commentId, setPost) => {
+    setPost((prevPost) => {
+      return {
+        ...prevPost,
+        comments: prevPost.comments.filter(
+          (comment) => comment._id !== commentId
+        ),
+      };
+    });
   };
 
   return {
@@ -183,6 +219,7 @@ const postsManager = (() => {
     fetchPost,
     putComment,
     deleteComment,
+    deleteLocalComment,
   };
 })();
 
