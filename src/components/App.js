@@ -23,7 +23,7 @@ function App() {
               fontSize: "1.5rem",
             }}
           >
-            <Link to="/">
+            <Link to="/posts">
               <li>Home</li>
             </Link>
             <Link to="/posts/new">

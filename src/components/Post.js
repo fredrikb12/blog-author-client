@@ -12,7 +12,13 @@ function Post() {
 
   const dialog = useRef(null);
 
-  async function handleClick(type, item) {
+  function handleChange(e) {
+    setPost((prevPost) => {
+      return { ...prevPost, [e.target.name]: e.target.value };
+    });
+  }
+
+  async function handleClick(type, item, e) {
     switch (type) {
       case "delete": {
         setCommentToDelete(() => item);
@@ -28,6 +34,13 @@ function Post() {
 
       case "deleteCancel": {
         setShow(() => false);
+        break;
+      }
+
+      case "submit": {
+        e.preventDefault();
+        const response = await postsManager.putPost(item, null);
+        console.log(response);
         break;
       }
       default:
@@ -58,10 +71,35 @@ function Post() {
 
   return (
     <div>
-      <div>
-        <p>{post.title}</p>
-        <p>{post.text}</p>
-      </div>
+      <form
+        style={{
+          display: "grid",
+          gridTemplateColumns: "150px 1fr",
+          maxWidth: "800px",
+          rowGap: "20px",
+        }}
+      >
+        <label htmlFor="title">Title</label>
+        <input
+          type="text"
+          name="title"
+          value={post.title || ""}
+          onChange={handleChange}
+        />
+        <label htmlFor="text">Text</label>
+        <textarea
+          name="text"
+          value={post.text || ""}
+          onChange={handleChange}
+          rows="20"
+        />
+        <button
+          onClick={(e) => handleClick("submit", { ...post }, e)}
+          type="submit"
+        >
+          Submit Post
+        </button>
+      </form>
       {post.comments &&
         post.comments.map((comment) => {
           return (
