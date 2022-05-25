@@ -11,8 +11,6 @@ const postsManager = (() => {
         method: "PUT",
         body: JSON.stringify({
           ...post,
-          published: !post.published,
-          author: post.author._id,
         }),
       });
 
@@ -56,7 +54,7 @@ const postsManager = (() => {
       callback("update", {
         _id: post._id,
         fieldName: "published",
-        fieldValue: !post.published,
+        fieldValue: post.published,
       });
     } else {
       callback("update", {

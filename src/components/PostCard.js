@@ -8,7 +8,11 @@ function PostCard({ post, handleClick }) {
           <h2>{post.title}</h2>
         </Link>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <button onClick={() => handleClick("update", post)}>
+          <button
+            onClick={() =>
+              handleClick("update", { ...post, published: !post.published })
+            }
+          >
             {post.published ? "Unpublish" : "Publish"}
           </button>
           <button
