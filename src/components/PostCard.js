@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 function PostCard({ post, handleClick }) {
   return (
-    <article>
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
+    <article style={{ padding: "20px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Link to={`/posts/${post._id}`}>
           <h2>{post.title}</h2>
         </Link>
