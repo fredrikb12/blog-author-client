@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "../styled/GlobalStyle";
 import Header from "./Header";
