@@ -1,39 +1,26 @@
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "../styled/GlobalStyle";
+import Header from "./Header";
 
 function App() {
   const [user, setUser] = useState(null);
+  const theme = {
+    main: "#E06B7A",
+    darkShade: "#121527",
+    darkAccent: "#717DA4",
+    lightShade: "#F0F0EB",
+    lightAccent: "A8A0A5",
+  };
+
   return (
     <>
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "10vh",
-        }}
-      >
-        <nav>
-          <ul
-            style={{
-              display: "flex",
-              listStyle: "none",
-              gap: "250px",
-              fontSize: "1.5rem",
-            }}
-          >
-            <Link to="/posts">
-              <li>Home</li>
-            </Link>
-            <Link to="/posts/new">
-              <li>New</li>
-            </Link>
-          </ul>
-        </nav>
-      </header>
-      <GlobalStyle />
-      <Outlet context={[user, setUser]} />
+      <ThemeProvider theme={theme}>
+        <Header />
+        <GlobalStyle />
+        <Outlet context={[user, setUser]} />
+      </ThemeProvider>
     </>
   );
 }
