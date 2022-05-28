@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { postsManager } from "../helpers/postsManager";
+import { StyledPosts } from "../styled/Posts.styled";
 import ConfirmDelete from "./ConfirmDelete";
 import PostCard from "./PostCard";
 
@@ -85,8 +86,7 @@ function Posts() {
 
   return (
     <>
-      <main>
-        <h1>Posts:</h1>
+      <StyledPosts>
         <p>{error && error.message}</p>
         <p>{error && "Status: " + error.status}</p>
         {error && error.status === 403 && <Link to="/sign-in">Sign In</Link>}
@@ -95,7 +95,7 @@ function Posts() {
             <PostCard key={post._id} post={post} handleClick={handleClick} />
           );
         })}
-      </main>
+      </StyledPosts>
       {showConfirm && (
         <ConfirmDelete
           ref={dialog}
