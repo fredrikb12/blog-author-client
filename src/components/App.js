@@ -17,8 +17,8 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Header />
         <GlobalStyle />
+        <Header />
         <Outlet context={[user, setUser]} />
       </ThemeProvider>
     </>
