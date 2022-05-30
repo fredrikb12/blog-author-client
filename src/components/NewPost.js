@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { DarkButton } from "../styled/Button.styled";
 import Button from "./Button";
 
 function NewPost() {
@@ -60,9 +61,11 @@ function NewPost() {
     <form
       style={{
         display: "grid",
-        gridTemplateColumns: "150px 500px",
+        gridTemplateColumns: "100px 1fr",
+        maxWidth: "800px",
         gap: "25px",
         padding: "25px",
+        margin: "auto",
       }}
     >
       <label htmlFor="title">Title:</label>
@@ -74,7 +77,12 @@ function NewPost() {
       />
 
       <label htmlFor="text">Text:</label>
-      <textarea name="text" value={formData.text} onChange={handleChange} />
+      <textarea
+        name="text"
+        value={formData.text}
+        onChange={handleChange}
+        rows="20"
+      />
 
       <label htmlFor="published">Published:</label>
       <input
@@ -84,9 +92,9 @@ function NewPost() {
         onChange={handleChange}
       />
 
-      <Button type="submit" onClick={handleSubmit}>
+      <DarkButton type="submit" onClick={handleSubmit}>
         Submit
-      </Button>
+      </DarkButton>
     </form>
   );
 }

@@ -68,10 +68,10 @@ function Comment({ comment, handleClick }) {
           <textarea name="text" value={text} onChange={handleChange} />
         </label>
         <div>
-          <Button type="submit" onClick={handleSubmit}>
+          <Button buttonType="DarkButton" type="submit" onClick={handleSubmit}>
             Submit
           </Button>
-          <Button type="button" onClick={handleCancel}>
+          <Button buttonType="DarkButton" type="button" onClick={handleCancel}>
             Cancel
           </Button>
         </div>
@@ -87,8 +87,14 @@ function Comment({ comment, handleClick }) {
           <p>{text || comment.text}</p>
         </div>
         <div>
-          <Button onClick={() => setEditing(() => true)}>Edit</Button>
           <Button
+            buttonType="DarkButton"
+            onClick={() => setEditing(() => true)}
+          >
+            Edit
+          </Button>
+          <Button
+            buttonType="DarkButton"
             className="delete-button"
             onClick={() => handleClick("delete", comment)}
           >

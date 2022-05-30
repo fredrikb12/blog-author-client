@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { postsManager } from "../helpers/postsManager";
-import { StyledButton } from "../styled/Button.styled";
+import { DarkButton, StyledButton } from "../styled/Button.styled";
 import Comment from "./Comment";
 import ConfirmDelete from "./ConfirmDelete";
 
@@ -74,7 +74,13 @@ function Post() {
   }, [postId, nav]);
 
   return (
-    <div>
+    <main
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <form
         style={{
           display: "grid",
@@ -96,24 +102,28 @@ function Post() {
           value={post.text || ""}
           onChange={handleChange}
           rows="20"
+          cols="60"
         />
-        <StyledButton
+        <DarkButton
           onClick={(e) => handleClick("submit", { ...post }, e)}
           type="submit"
         >
           Submit Post
-        </StyledButton>
+        </DarkButton>
       </form>
-      {post.comments &&
-        post.comments.map((comment) => {
-          return (
-            <Comment
-              key={comment._id}
-              comment={comment}
-              handleClick={handleClick}
-            />
-          );
-        })}
+      <hr style={{ margin: "40px", width: "100%", borderColor: "black" }}></hr>
+      <div>
+        {post.comments &&
+          post.comments.map((comment) => {
+            return (
+              <Comment
+                key={comment._id}
+                comment={comment}
+                handleClick={handleClick}
+              />
+            );
+          })}
+      </div>
       {show && (
         <ConfirmDelete
           show={show}
@@ -122,7 +132,7 @@ function Post() {
           ref={dialog}
         />
       )}
-    </div>
+    </main>
   );
 }
 

@@ -9,10 +9,14 @@ function App() {
   const theme = {
     main: "#EC9CA6",
     darkShade: "#121527",
+    darkShadeHover: "#090C1E",
+    darkShadeActive: "#0D1543",
     darkAccent: "#717DA4",
     lightShade: "#F0F0EB",
     lightAccent: "#A8A0A5",
     lightAccentHover: "#85737E",
+    lightAccentActive: "#6C5864",
+    brightText: "#FFF2F3",
   };
 
   return (
