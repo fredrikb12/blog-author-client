@@ -1,14 +1,10 @@
 import { Link } from "react-router-dom";
-import { LightButton, StyledButton } from "../styled/Button.styled";
-import { StyledPostCard } from "../styled/PostCard.styled";
-import Button from "./Button";
-import styled from "styled-components";
-
-const ButtonContainer = styled.div`
-  display: flex;
-  gap: 20px;
-  margin-top: 20px;
-`;
+import { LightButton } from "../styled/Button.styled";
+import {
+  StyledPostCard,
+  ButtonContainer,
+  SmallPara,
+} from "../styled/PostCard.styled";
 
 function PostCard({ post, handleClick }) {
   return (
@@ -25,16 +21,22 @@ function PostCard({ post, handleClick }) {
         </Link>
       </div>
       <p>{post.text}</p>
-      <div style={{ display: "flex", gap: "12px" }}>
-        <p>
+      <div
+        style={{
+          display: "flex",
+          gap: "12px",
+          marginTop: "12px",
+        }}
+      >
+        <SmallPara>
           {post.author ? post.author.first_name + " " : null}
           {post.author ? post.author.last_name : null}
-        </p>
-        <p>
+        </SmallPara>
+        <SmallPara>
           {post.createdAt
             ? new Date(post.createdAt).toLocaleDateString()
             : null}
-        </p>
+        </SmallPara>
       </div>
       <ButtonContainer>
         <LightButton
@@ -50,7 +52,7 @@ function PostCard({ post, handleClick }) {
         >
           Delete
         </LightButton>
-        <p>{post.error ? post.error : ""}</p>
+        {post.error && <p>{post.error}</p>}
       </ButtonContainer>
     </StyledPostCard>
   );

@@ -8,3 +8,14 @@ export const StyledPostCard = styled.article`
     border-bottom: none;
   }
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+`;
+
+export const SmallPara = styled.p`
+  color: #2f2f2f;
+  font-size: 0.96rem;
+`;
