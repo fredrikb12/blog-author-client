@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { postsManager } from "../helpers/postsManager";
+import { StyledButton } from "../styled/Button.styled";
 import Comment from "./Comment";
 import ConfirmDelete from "./ConfirmDelete";
 
@@ -9,6 +10,8 @@ function Post() {
   const [post, setPost] = useState({});
   const [show, setShow] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
+
+  const nav = useNavigate();
 
   const dialog = useRef(null);
 
@@ -64,10 +67,11 @@ function Post() {
   useEffect(() => {
     async function loadPost() {
       const data = await postsManager.fetchPost(postId);
+      if (data.status !== 200 && data.status !== 404) nav("/sign-in");
       setPost(() => data.post);
     }
     loadPost();
-  }, [postId]);
+  }, [postId, nav]);
 
   return (
     <div>
@@ -93,12 +97,12 @@ function Post() {
           onChange={handleChange}
           rows="20"
         />
-        <button
+        <StyledButton
           onClick={(e) => handleClick("submit", { ...post }, e)}
           type="submit"
         >
           Submit Post
-        </button>
+        </StyledButton>
       </form>
       {post.comments &&
         post.comments.map((comment) => {
