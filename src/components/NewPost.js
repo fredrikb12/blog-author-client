@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "./Button";
 
 function NewPost() {
   const [formData, setFormData] = useState({
@@ -6,6 +8,8 @@ function NewPost() {
     text: "",
     published: false,
   });
+
+  const nav = useNavigate();
 
   function handleChange(e) {
     if (e.target.name === "published") {
@@ -39,7 +43,9 @@ function NewPost() {
       if (!response.ok) return Promise.reject(response.status);
 
       const res = await response.json();
-      console.log(res);
+      if (res.status === 200 && res.message === "Post submitted") {
+        nav(`/posts/${res.post._id}`);
+      }
       return res;
     } catch (e) {
       throw new Error(e);
@@ -78,9 +84,9 @@ function NewPost() {
         onChange={handleChange}
       />
 
-      <button type="submit" onClick={handleSubmit}>
+      <Button type="submit" onClick={handleSubmit}>
         Submit
-      </button>
+      </Button>
     </form>
   );
 }
