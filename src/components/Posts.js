@@ -87,9 +87,21 @@ function Posts() {
   return (
     <>
       <StyledPosts>
-        {error && <p>{error.message}</p>}
-        <p>{error && "Status: " + error.status}</p>
-        {error && error.status === 403 && <Link to="/sign-in">Sign In</Link>}
+        {error && (
+          <div
+            style={{
+              padding: "50px",
+              fontSize: "1.3rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "12px",
+            }}
+          >
+            <p>{error.message}</p>
+            <p>{"Status: " + error.status}</p>
+            {error.status === 403 && <Link to="/sign-in">Sign In</Link>}
+          </div>
+        )}
         {posts.map((post) => {
           return (
             <PostCard key={post._id} post={post} handleClick={handleClick} />
