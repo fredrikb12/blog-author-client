@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "./Button";
 
 const ConfirmDelete = React.forwardRef((props, ref) => {
   const { handleClick, show, item } = props;
@@ -28,8 +29,10 @@ const ConfirmDelete = React.forwardRef((props, ref) => {
       >
         <p>Are you sure you want to delete this post?</p>
         <div style={{ display: "flex", gap: "20px" }}>
-          <button onClick={() => handleClick("deleteConfirm", item)}>Confirm</button>
-          <button onClick={() => handleClick("deleteCancel")}>Cancel</button>
+          <Button onClick={() => handleClick("deleteConfirm", item)}>
+            Confirm
+          </Button>
+          <Button onClick={() => handleClick("deleteCancel")}>Cancel</Button>
         </div>
       </dialog>
     </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import Button from "./Button";
 
 function SignIn() {
   const [pw, setPw] = useState("");
@@ -76,9 +77,9 @@ function SignIn() {
               onChange={handleChange}
             />
           </label>
-          <button style={{ maxWidth: "100px" }} type="submit">
+          <Button style={{ maxWidth: "100px" }} type="submit">
             Submit
-          </button>
+          </Button>
         </div>
         {errors.map((error, index) => {
           return (

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { postsManager } from "../helpers/postsManager";
+import Button from "./Button";
 
 function Comment({ comment, handleClick }) {
   const [editing, setEditing] = useState(false);
@@ -67,12 +68,12 @@ function Comment({ comment, handleClick }) {
           <textarea name="text" value={text} onChange={handleChange} />
         </label>
         <div>
-          <button type="submit" onClick={handleSubmit}>
+          <Button type="submit" onClick={handleSubmit}>
             Submit
-          </button>
-          <button type="button" onClick={handleCancel}>
+          </Button>
+          <Button type="button" onClick={handleCancel}>
             Cancel
-          </button>
+          </Button>
         </div>
       </form>
     );
@@ -86,13 +87,13 @@ function Comment({ comment, handleClick }) {
           <p>{text || comment.text}</p>
         </div>
         <div>
-          <button onClick={() => setEditing(() => true)}>Edit</button>
-          <button
+          <Button onClick={() => setEditing(() => true)}>Edit</Button>
+          <Button
             className="delete-button"
             onClick={() => handleClick("delete", comment)}
           >
             Delete
-          </button>
+          </Button>
         </div>
       </article>
     );
