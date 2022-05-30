@@ -11,7 +11,7 @@ function App() {
     darkShade: "#121527",
     darkAccent: "#717DA4",
     lightShade: "#F0F0EB",
-    lightAccent: "A8A0A5",
+    lightAccent: "#A8A0A5",
   };
 
   return (
