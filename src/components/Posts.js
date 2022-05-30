@@ -87,7 +87,7 @@ function Posts() {
   return (
     <>
       <StyledPosts>
-        <p>{error && error.message}</p>
+        {error && <p>{error.message}</p>}
         <p>{error && "Status: " + error.status}</p>
         {error && error.status === 403 && <Link to="/sign-in">Sign In</Link>}
         {posts.map((post) => {
@@ -101,7 +101,7 @@ function Posts() {
           ref={dialog}
           handleClick={handleClick}
           show={showConfirm}
-          post={postToConfirm}
+          item={postToConfirm}
         />
       )}
     </>
