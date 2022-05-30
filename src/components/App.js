@@ -7,7 +7,7 @@ import Header from "./Header";
 function App() {
   const [user, setUser] = useState(null);
   const theme = {
-    main: "#E06B7A",
+    main: "#EC9CA6",
     darkShade: "#121527",
     darkAccent: "#717DA4",
     lightShade: "#F0F0EB",
