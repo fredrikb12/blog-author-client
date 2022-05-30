@@ -10,3 +10,9 @@ export const StyledButton = styled.button`
     cursor: pointer;
   }
 `;
+
+export const LightButton = styled(StyledButton)`
+  background-color: ${({ theme }) => theme.lightAccent};
+  color: ${({ theme }) => theme.darkShade};
+  box-shadow: 2px 2px 6px 0 #1f1f1f;
+`;

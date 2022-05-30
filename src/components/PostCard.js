@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { StyledButton } from "../styled/Button.styled";
+import { LightButton, StyledButton } from "../styled/Button.styled";
 import { StyledPostCard } from "../styled/PostCard.styled";
 import Button from "./Button";
 
@@ -11,19 +11,19 @@ function PostCard({ post, handleClick }) {
           <h2>{post.title}</h2>
         </Link>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <Button
+          <LightButton
             onClick={() =>
               handleClick("update", { ...post, published: !post.published })
             }
           >
             {post.published ? "Unpublish" : "Publish"}
-          </Button>
-          <Button
+          </LightButton>
+          <LightButton
             className="delete-button"
             onClick={() => handleClick("delete", post)}
           >
             Delete
-          </Button>
+          </LightButton>
           <p>{post.error ? post.error : ""}</p>
         </div>
       </div>
